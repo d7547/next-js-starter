@@ -2,7 +2,9 @@
 import {
   IconCheck,
   IconPlayerPause,
+  IconPlayerPauseFilled,
   IconPlayerPlay,
+  IconPlayerPlayFilled,
 } from "@tabler/icons-react";
 import { useState } from "react";
 import { Button } from "../../elements/Button/Button";
@@ -76,15 +78,15 @@ const VideoPlayer = ({
           `}
         >
           {isPlaying ? (
-            <IconPlayerPause size={24} />
+            <IconPlayerPauseFilled className="text-bismarkLight" size={26} />
           ) : (
-            <IconPlayerPlay size={24} />
+            <IconPlayerPlayFilled className="text-bismarkLight" size={26} />
           )}
         </button>
   
         {/* Video duration badge */}
         {duration && (
-          <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-sm text-white px-2 py-1 rounded-md text-xs">
+          <div className="absolute top-3  right-1/2 translate-x-1/2  backdrop-blur-sm text-white px-2 py-1 rounded-md text-md  font-bold ">
             {duration}
           </div>
         )}

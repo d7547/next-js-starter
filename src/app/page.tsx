@@ -21,7 +21,8 @@ export default function Home() {
               "Enterprise Software", 
               "Data Center Automation", 
               "Cloud Security", 
-              "Cyber Security"
+              "Cyber Security",
+              
             ]}
             videoDuration="2 min commercial"
           />
