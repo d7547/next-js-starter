@@ -25,7 +25,7 @@ const ServiceBadge = ({ service }: { service: string }) => {
   return (
     <div className="flex items-center gap-2 text-gray-600 mb-3">
       <div className="bg-cadetBlueLight dark:cadetBlueDark rounded-full p-1">
-        <IconCheck size={16} className="text-white font-bold" />
+        <IconCheck size={16} className="text-white font-bold w-5 h-5"  />
       </div>
       <span className="text-sm">{service}</span>
     </div>
@@ -36,55 +36,71 @@ const ServiceBadge = ({ service }: { service: string }) => {
 
 // Video Player component
 const VideoPlayer = ({
-  thumbnail,
-  duration,
-}: {
-  thumbnail?: string;
-  duration?: string;
-}) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const togglePlay = () => {
-    setIsPlaying(!isPlaying);
-  };
-
-  return (
-    <div className="relative w-full h-full bg-botticelliLight dark:bg-botticelliDark rounded-lg overflow-hidden">
-      {/* Video placeholder image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: thumbnail ? `url(${thumbnail})` : "none",
-          backgroundColor: thumbnail ? "transparent" : "rgb(209 213 219)",
-        }}
-      />
-
-      {/* Play/Pause button */}
-      <button
-        onClick={togglePlay}
-        className={`
-          absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
-          bg-white/80 backdrop-blur-sm rounded-full p-3 shadow-lg
-          transition-all duration-300 hover:scale-110 focus:outline-none
-          ${isPlaying ? "animate-pulse" : ""}
-        `}
-      >
-        {isPlaying ? (
-          <IconPlayerPause size={24} />
+    thumbnail,
+    duration,
+  }: {
+    thumbnail?: string;
+    duration?: string;
+  }) => {
+    const [isPlaying, setIsPlaying] = useState(false);
+  
+    const togglePlay = () => {
+      setIsPlaying((prev) => !prev);
+    };
+  
+    return (
+      <div className="relative w-full h-full bg-botticelliLight dark:bg-botticelliDark rounded-lg overflow-hidden">
+        {/* Thumbnail or video */}
+        {!isPlaying ? (
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: thumbnail ? `url(${thumbnail})` : "none",
+              backgroundColor: thumbnail ? "transparent" : "rgb(209 213 219)",
+            }}
+          />
         ) : (
-          <IconPlayerPlay size={24} />
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+          >
+            <source
+              src="https://www.w3schools.com/html/mov_bbb.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
         )}
-      </button>
-
-      {/* Video duration badge */}
-      {duration && (
-        <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-sm text-white px-2 py-1 rounded-md text-xs">
-          {duration}
-        </div>
-      )}
-    </div>
-  );
-};
+  
+        {/* Play/Pause button */}
+        <button
+          onClick={togglePlay}
+          className={`
+            absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+            bg-white/80 backdrop-blur-sm rounded-full p-3 shadow-lg
+            transition-all duration-300 hover:scale-110 focus:outline-none
+            ${isPlaying ? "animate-pulse" : ""}
+          `}
+        >
+          {isPlaying ? (
+            <IconPlayerPause size={24} />
+          ) : (
+            <IconPlayerPlay size={24} />
+          )}
+        </button>
+  
+        {/* Video duration badge */}
+        {duration && (
+          <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-sm text-white px-2 py-1 rounded-md text-xs">
+            {duration}
+          </div>
+        )}
+      </div>
+    );
+  };
+  
 
 // Main Company Profile Component
 export default function CompanyProfile({
@@ -164,8 +180,8 @@ export default function CompanyProfile({
             <Button variant="primary" className="flex-1 ">
               Book Meeting
             </Button>
-            <Button variant="outline" className="flex-1" onClick={toggleFollow}>
-              {isFollowing ? "Following" : "Free Trial"}
+            <Button variant="outline" className="flex-1" >
+              Free Trial
             </Button>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import ThemeToggle from '../ThemeToggle/ThemeToggle';
+import ThemeToggle from '../../ThemeToggle/ThemeToggle';
 
 const Header = () => {
   return (
