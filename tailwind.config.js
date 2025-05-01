@@ -14,6 +14,10 @@ module.exports = {
       colors:{
         bismarkLight: "#486284",
         bismarkDark: "#3b4e64",
+        cadetBlueLight: "#AAB5C3",
+        cadetBlueDark: "#8B9BB2",
+        botticelliLight: "#CED7E4",
+        botticelliDark: "#B7C9D8",
       },
       animation: {
         'fade-in-down': 'fadeInDown 0.6s ease-out',
