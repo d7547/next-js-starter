@@ -31,7 +31,7 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
         // ? https://react.dev/reference/react-dom/client/hydrateRoot#suppressing-unavoidable-hydration-mismatch-errors
         <html suppressHydrationWarning lang='en'>
             <body className={`${geistSans.variable} ${geistMono.variable}`}>
-                <ThemeProvider>{children}</ThemeProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>{children}</ThemeProvider>
             </body>
         </html>
     );
