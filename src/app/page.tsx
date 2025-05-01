@@ -1,6 +1,6 @@
-import CompanyProfile from "@/components/ui/CompanyProfileCard/CompanyProfileCard";
-import Header from "@/components/ui/Header/Header";
-import ThemeToggle from "@/components/ThemeToggle/ThemeToggle";
+import CompanyProfile from "@/components/modules/CompanyProfileCard/CompanyProfileCard";
+import Header from "@/components/modules/Header/Header";
+import ThemeToggle from "@/components/modules/ThemeToggle/ThemeToggle";
 
 export default function Home() {
   return (

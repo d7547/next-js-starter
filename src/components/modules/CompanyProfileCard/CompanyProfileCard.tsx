@@ -5,9 +5,10 @@ import {
   IconPlayerPlay,
 } from "@tabler/icons-react";
 import { useState } from "react";
-import { Button } from "../Button/Button";
-import { Avatar } from "../Avatar/Avatart";
-import { ActionButton } from "../Avatar/ActionButton/ActionButton";
+import { Button } from "../../elements/Button/Button";
+import { Avatar } from "../../elements/Avatar/Avatart";
+import { ActionButton } from "../../elements/Avatar/ActionButton/ActionButton";
+import { ServiceBadge } from "@/components/elements/ServiceBadge/ServiceBadge";
 
 // Types for our components
 type CompanyProfileProps = {
@@ -21,16 +22,6 @@ type CompanyProfileProps = {
 };
 
 // Service Badge component
-const ServiceBadge = ({ service }: { service: string }) => {
-  return (
-    <div className="flex items-center gap-2 text-gray-600 mb-3">
-      <div className="bg-cadetBlueLight dark:cadetBlueDark rounded-full p-1">
-        <IconCheck size={16} className="text-white font-bold w-5 h-5"  />
-      </div>
-      <span className="text-sm">{service}</span>
-    </div>
-  );
-};
 
 // Avatar component
 
@@ -79,7 +70,7 @@ const VideoPlayer = ({
           onClick={togglePlay}
           className={`
             absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
-            bg-white/80 backdrop-blur-sm rounded-full p-3 shadow-lg
+            bg-white/80 dark:bg-bismarkLight backdrop-blur-sm rounded-full p-3 shadow-lg
             transition-all duration-300 hover:scale-110 focus:outline-none
             ${isPlaying ? "animate-pulse" : ""}
           `}
@@ -177,7 +168,7 @@ export default function CompanyProfile({
           </div>
 
           <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
-            <Button variant="primary" className="flex-1 ">
+            <Button variant="primary"  className="flex-[2]">
               Book Meeting
             </Button>
             <Button variant="outline" className="flex-1" >
