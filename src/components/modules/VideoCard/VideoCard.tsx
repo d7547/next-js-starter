@@ -3,7 +3,13 @@
 import { Button } from "@/components/elements/Button/Button";
 import { FC, useRef, useState } from "react";
 import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
-import { IconEye, IconFileLike, IconPlayerPauseFilled, IconPlayerPlayFilled, IconThumbUp } from "@tabler/icons-react";
+import {
+  IconEye,
+  IconFileLike,
+  IconPlayerPauseFilled,
+  IconPlayerPlayFilled,
+  IconThumbUp,
+} from "@tabler/icons-react";
 import StatsRow from "../StatsRow/StatsRow";
 
 interface VideoCardProps {
@@ -36,6 +42,7 @@ const VideoCard: FC<VideoCardProps> = ({
       setIsPlaying(false);
     }
   };
+  
   return (
     <div className="w-full max-w-5xl mx-auto bg-white rounded-xl shadow-md overflow-hidden transition-shadow hover:shadow-lg">
       <div className="flex flex-col md:flex-row p-4 gap-4">
@@ -51,7 +58,17 @@ const VideoCard: FC<VideoCardProps> = ({
             onClick={togglePlay}
             className="absolute inset-0 flex items-center justify-center text-white text-3xl font-bold bg-black bg-opacity-30 hover:bg-opacity-50 transition"
           >
-            {isPlaying ?   <IconPlayerPauseFilled className="text-bismarkLight bg-white w-12 h-12 rounded-full p-2" size={26} />: <IconPlayerPlayFilled className="text-bismarkLight bg-white w-12 h-12 rounded-full p-2" size={26} />}
+            {isPlaying ? (
+              <IconPlayerPauseFilled
+                className="text-bismarkLight bg-white w-12 h-12 rounded-full p-2"
+                size={26}
+              />
+            ) : (
+              <IconPlayerPlayFilled
+                className="text-bismarkLight bg-white w-12 h-12 rounded-full p-2"
+                size={26}
+              />
+            )}
           </div>
         </div>
 

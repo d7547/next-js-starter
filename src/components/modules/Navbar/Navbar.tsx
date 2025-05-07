@@ -7,16 +7,20 @@ import IconButton from "../IconButton/IconButton";
 import { IconBell, IconQuestionMark } from "@tabler/icons-react";
 
 const Navbar = () => {
-    const QuestionmarkIcon = () =>{
-        return <IconQuestionMark className="border-[2px] border-bismarkLight text-bismarkLight  rounded-full" size={20} />
-    }
-    const BellIcon =() =>{
-        return <IconBell className="  text-bismarkLight  rounded-full" size={21} />
-    }
+  const QuestionmarkIcon = () => {
+    return (
+      <IconQuestionMark
+        className="border-[2px] border-bismarkLight text-bismarkLight  rounded-full"
+        size={20}
+      />
+    );
+  };
+  const BellIcon = () => {
+    return <IconBell className="  text-bismarkLight  rounded-full" size={21} />;
+  };
+  
   return (
-    <header
-      className="w-full bg-white border-b shadow-sm "
-    >
+    <header className="w-full bg-white border-b shadow-sm ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center space-x-6">
@@ -36,7 +40,7 @@ const Navbar = () => {
         <div className="flex items-center space-x-4">
           <IconButton icon={QuestionmarkIcon} />
           <IconButton icon={BellIcon} />
-          <Avatar src="/images/dummy-img.jpg"  />
+          <Avatar src="/images/dummy-img.jpg" />
         </div>
       </div>
     </header>
