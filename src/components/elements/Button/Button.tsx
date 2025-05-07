@@ -13,7 +13,7 @@ const buttonVariants = cva(
         primary:
           "bg-bismarkLight dark:bismarkDark text-white hover:bg-bismarkDark focus:ring-blue-500",
         secondary:
-          "bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400",
+          "bg-botticelliLight text-bismarkLight hover:bg-gray-300 focus:ring-gray-400",
         outline:
           "bg-transparent border-2 border-bismarkLight text-bismarkLight  hover:bg-transparent focus:ring-blue-500",
         ghost:

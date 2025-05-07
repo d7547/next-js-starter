@@ -8,124 +8,78 @@ import {
 } from "@tabler/icons-react";
 import { useState } from "react";
 import { Button } from "../../elements/Button/Button";
-import { Avatar } from "../../elements/Avatar/Avatart";
-import { ActionButton } from "../../elements/Avatar/ActionButton/ActionButton";
+import { Avatar } from "../../elements/Avatar/Avatar";
+import { ActionButton } from "../../elements/ActionButton/ActionButton";
 import { ServiceBadge } from "@/components/elements/ServiceBadge/ServiceBadge";
+import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
 
-// Types for our components
 type CompanyProfileProps = {
-  name: string;
-  location: string;
-  description: string;
+  name?: string;
+  location?: string;
+  description?: string;
   logoLetter?: string;
-  services: string[];
+  services?: string[];
   videoThumbnail?: string;
   videoDuration?: string;
+  videoSrc?: string;
+  featureBadge?: React.ReactNode;
+  onBookMeeting?: () => void;
+  onFreeTrial?: () => void;
+  onFollowToggle?: (isFollowing: boolean) => void;
+  isFollowing?: boolean;
+  showActions?: boolean;
+  showButtons?: boolean;
+  ctaButtons?: React.ReactNode;
+  children?: React.ReactNode;
+  containerClassName?: string;
+  leftColClassName?: string;
+  rightColClassName?: string;
 };
 
-// Service Badge component
-
-// Avatar component
-
-// Video Player component
-const VideoPlayer = ({
-    thumbnail,
-    duration,
-  }: {
-    thumbnail?: string;
-    duration?: string;
-  }) => {
-    const [isPlaying, setIsPlaying] = useState(false);
-  
-    const togglePlay = () => {
-      setIsPlaying((prev) => !prev);
-    };
-  
-    return (
-      <div className="relative w-full h-full bg-botticelliLight dark:bg-botticelliDark rounded-lg overflow-hidden">
-        {/* Thumbnail or video */}
-        {!isPlaying ? (
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{
-              backgroundImage: thumbnail ? `url(${thumbnail})` : "none",
-              backgroundColor: thumbnail ? "transparent" : "rgb(209 213 219)",
-            }}
-          />
-        ) : (
-          <video
-            className="absolute inset-0 w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-          >
-            <source
-              src="https://www.w3schools.com/html/mov_bbb.mp4"
-              type="video/mp4"
-            />
-            Your browser does not support the video tag.
-          </video>
-        )}
-  
-        {/* Play/Pause button */}
-        <button
-          onClick={togglePlay}
-          className={`
-            absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
-            bg-white/80 dark:bg-bismarkLight backdrop-blur-sm rounded-full p-3 shadow-lg
-            transition-all duration-300 hover:scale-110 focus:outline-none
-            ${isPlaying ? "animate-pulse" : ""}
-          `}
-        >
-          {isPlaying ? (
-            <IconPlayerPauseFilled className="text-bismarkLight" size={26} />
-          ) : (
-            <IconPlayerPlayFilled className="text-bismarkLight" size={26} />
-          )}
-        </button>
-  
-        {/* Video duration badge */}
-        {duration && (
-          <div className="absolute top-3  right-1/2 translate-x-1/2  backdrop-blur-sm text-white px-2 py-1 rounded-md text-md  font-bold ">
-            {duration}
-          </div>
-        )}
-      </div>
-    );
-  };
-  
-
-// Main Company Profile Component
 export default function CompanyProfile({
-  name,
-  location,
-  description,
+  name = "Company Name",
+  location = "Unknown location",
+  description = "No description provided.",
   logoLetter = "A",
-  services,
+  services = [],
   videoThumbnail,
   videoDuration,
+  videoSrc = "https://www.w3schools.com/html/mov_bbb.mp4",
+  featureBadge,
+  onBookMeeting,
+  onFreeTrial,
+  onFollowToggle,
+  isFollowing: controlledFollow,
+  showActions = true,
+  showButtons = true,
+  ctaButtons,
+  children,
+  containerClassName = "",
+  leftColClassName = "",
+  rightColClassName = "",
 }: CompanyProfileProps) {
-  const [isFollowing, setIsFollowing] = useState(false);
-  const [followState, setFollowState] = useState<string>("Follow");
+  const [internalFollow, setInternalFollow] = useState(false);
+  const isControlled = controlledFollow !== undefined;
+  const following = isControlled ? controlledFollow : internalFollow;
 
   const handleFollowClick = (): void => {
-    setFollowState(followState === "Follow" ? "Following" : "Follow");
+    const newFollowState = !following;
+    if (!isControlled) setInternalFollow(newFollowState);
+    onFollowToggle?.(newFollowState);
   };
 
-  const toggleFollow = () => {
-    setIsFollowing(!isFollowing);
-  };
-
-  // Split services array into two columns
   const midpoint = Math.ceil(services.length / 2);
   const leftServices = services.slice(0, midpoint);
   const rightServices = services.slice(midpoint);
 
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-lg">
-      <div className="md:flex ">
-        <div className="md:w-2/5 p-4">
-          <div className="flex items-center flex-1">
+    <div
+      className={`max-w-5xl w-full  bg-white shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-lg ${containerClassName}`}
+    >
+      {featureBadge}
+      <div className="md:flex">
+        <div className={`md:w-2/5 p-4 ${leftColClassName}`}>
+          <div className="flex items-center">
             <Avatar letter={logoLetter} />
             <div className="ml-3">
               <h2 className="font-medium text-gray-800">{name}</h2>
@@ -133,50 +87,70 @@ export default function CompanyProfile({
             </div>
           </div>
         </div>
-        <div className="md:w-3/5 p-4 md:p-6">
-          <div className="flex gap-3">
-            <ActionButton variant="primary" onClick={handleFollowClick}>
-              {followState}
-            </ActionButton>
-            <ActionButton variant="secondary">Share</ActionButton>
-          </div>
+
+        <div className={`md:w-3/5 p-4 md:p-6 ${rightColClassName}`}>
+          {showActions && (
+            <div className="flex gap-8">
+              <ActionButton variant="primary" onClick={handleFollowClick}>
+                {following ? "Following" : "Follow"}
+              </ActionButton>
+              <ActionButton variant="secondary">Share</ActionButton>
+            </div>
+          )}
         </div>
       </div>
+
       <div className="md:flex">
-        {/* Left column with logo and video */}
-        <div className="md:w-2/5 p-4">
-          <div className="h-56 md:h-full rounded-lg overflow-hidden">
-            <VideoPlayer thumbnail={videoThumbnail} duration={videoDuration} />
-          </div>
+        {/* Left: Video */}
+        <div className={`md:w-2/5 p-4 ${leftColClassName}`}>
+          {videoThumbnail && videoDuration && (
+            <div className="h-56 md:h-full rounded-lg overflow-hidden">
+              <VideoPlayer
+                thumbnail={videoThumbnail}
+                duration={videoDuration}
+                videoSrc={videoSrc}
+              />
+            </div>
+          )}
         </div>
 
-        {/* Right column with description, services and CTAs */}
-        <div className="md:w-3/5 p-4 md:p-6">
+        {/* Right: Description + Services + CTAs */}
+        <div className={`md:w-3/5 p-4 md:p-6 ${rightColClassName}`}>
           <p className="text-sm text-gray-600 mb-6 leading-relaxed">
             {description}
           </p>
 
-          <div className="grid grid-cols-2 gap-2 mb-8">
-            <div>
-              {leftServices.map((service, idx) => (
-                <ServiceBadge key={`left-${idx}`} service={service} />
-              ))}
+          {services.length > 0 && (
+            <div className="grid grid-cols-2 gap-2 mb-8">
+              <div>
+                {leftServices.map((service, idx) => (
+                  <ServiceBadge key={`left-${idx}`} service={service} />
+                ))}
+              </div>
+              <div>
+                {rightServices.map((service, idx) => (
+                  <ServiceBadge key={`right-${idx}`} service={service} />
+                ))}
+              </div>
             </div>
-            <div>
-              {rightServices.map((service, idx) => (
-                <ServiceBadge key={`right-${idx}`} service={service} />
-              ))}
-            </div>
-          </div>
+          )}
 
-          <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
-            <Button variant="primary"  className="flex-[2]">
-              Book Meeting
-            </Button>
-            <Button variant="outline" className="flex-1" >
-              Free Trial
-            </Button>
-          </div>
+          {ctaButtons ? (
+            <div className="mb-6">{ctaButtons}</div>
+          ) : (
+            showButtons && (
+              <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
+                <Button variant="primary" className="flex-[2]" onClick={onBookMeeting}>
+                  Book Meeting
+                </Button>
+                <Button variant="outline" className="flex-1" onClick={onFreeTrial}>
+                  Free Trial
+                </Button>
+              </div>
+            )
+          )}
+
+          {children}
         </div>
       </div>
     </div>
